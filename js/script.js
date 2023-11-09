@@ -1,4 +1,4 @@
-const $pantalla = document.querySelector("#txt-pantalla"),
+const $screen = document.querySelector("#txt-screen"),
 $btn0 = document.querySelector("#btn-0"),
 $btn00 = document.querySelector("#btn-00"),
 $btn1 = document.querySelector("#btn-1"),
@@ -10,218 +10,197 @@ $btn6 = document.querySelector("#btn-6"),
 $btn7 = document.querySelector("#btn-7"),
 $btn8 = document.querySelector("#btn-8"),
 $btn9 = document.querySelector("#btn-9"),
-$btnResta = document.querySelector("#btn-resta"),
-$btnSuma = document.querySelector("#btn-suma"),
-$btnMultiplicacion = document.querySelector("#btn-multiplicacion"),
+$btnSubstraction = document.querySelector("#btn-substraction"),
+$btnAddition = document.querySelector("#btn-addition"),
+$btnMultiplication = document.querySelector("#btn-multiplication"),
 $btnDivision = document.querySelector("#btn-division"),
-$btnLimpiar = document.querySelector("#btn-limpiar"),
-$btnPunto = document.querySelector("#btn-punto"),
-$btnIgual = document.querySelector("#btn-igual");
+$btnClean = document.querySelector("#btn-clean"),
+$btnPeriod = document.querySelector("#btn-period"),
+$btnEqual = document.querySelector("#btn-equal");
 
-let numero = 0,
-    acumulador = 0,
-    inicio = true,
-    puntoPresionado = false,
-    operadorPresionado = false,
-    numeroPresionado = false,
-    igualPresionado = true,
-    operacion = "";
+let number = 0,
+    accumulator = 0,
+    start = true,
+    isPeriodPressed = false,
+    isOperatorPressed = false,
+    isNumberPressed = false,
+    isEqualPressed = true,
+    operation = "";
 
-//logica----------------------------------------------
+//logic----------------------------------------------
 
 
 
-function asignarNumeros(n)
+function assignNumbers(n)
 {
-    console.log(`numeroPresionado ${numeroPresionado}; operadorPresionado ${operadorPresionado}`)
-    if(puntoPresionado)
+    
+    if(isPeriodPressed)
     {
-        $pantalla.value += `${n}`;
+        $screen.value += `${n}`;
     }
-    else if($pantalla.value === "" || $pantalla.value === "0" || operadorPresionado && !numeroPresionado)
+    else if($screen.value === "" || $screen.value === "0" || isOperatorPressed && !isNumberPressed)
     {
-        $pantalla.value = `${eval(n)}`;
+        $screen.value = `${eval(n)}`;
     }
     else
     {
-        $pantalla.value += `${n}`;
+        $screen.value += `${n}`;
     }
 
-    numero = eval($pantalla.value);
-    numeroPresionado = true;
-    // operadorPresionado = false;
+    number = eval($screen.value);
+    isNumberPressed = true;
 }
 
-$btn0.onclick = () => asignarNumeros("0");
+$btn0.onclick = () => assignNumbers("0");
 
-$btn00.onclick = () => asignarNumeros("00");
+$btn00.onclick = () => assignNumbers("00");
 
-$btn1.onclick = () => asignarNumeros("1");
+$btn1.onclick = () => assignNumbers("1");
 
-$btn2.onclick = () => asignarNumeros("2");
+$btn2.onclick = () => assignNumbers("2");
 
-$btn3.onclick = () => asignarNumeros("3");
+$btn3.onclick = () => assignNumbers("3");
 
-$btn4.onclick = () => asignarNumeros("4");
+$btn4.onclick = () => assignNumbers("4");
 
-$btn5.onclick = () => asignarNumeros("5");
+$btn5.onclick = () => assignNumbers("5");
 
-$btn6.onclick = () => asignarNumeros("6");
+$btn6.onclick = () => assignNumbers("6");
 
-$btn7.onclick = () => asignarNumeros("7");
+$btn7.onclick = () => assignNumbers("7");
 
-$btn8.onclick = () => asignarNumeros("8");
+$btn8.onclick = () => assignNumbers("8");
 
-$btn9.onclick = () => asignarNumeros("9");
+$btn9.onclick = () => assignNumbers("9");
 
 
 
-// operaciones ---------------------------------------------------------------------------------------------------------
-function logicaOperaciones(op)
+// operations -------------------------------------------------------------------------------------------------
+function performOperationLogic(op)
 {
-    if(operadorPresionado)
+    if(isOperatorPressed)
     {
-        if(numeroPresionado)
-            aplicarOperacion();
+        if(isNumberPressed)
+            applyOperation();
     }
 
-    operadorPresionado = true;
-    puntoPresionado = false;
-    operacion = op;
-    numeroPresionado = false;
+    isOperatorPressed = true;
+    isPeriodPressed = false;
+    operation = op;
+    isNumberPressed = false;
 
-    if(inicio)
+    if(start)
     {
-        acumulador = numero;
-        inicio = false;
+        accumulator = number;
+        start = false;
         return;
     }
 
  
 }
 
-function aplicarOperacion()
+function applyOperation()
 {
-    switch(operacion)
+    switch(operation)
     {
         case "+":
-            acumulador += numero;
+            accumulator += number;
         break;
 
         case "-":
-            acumulador -= numero;
+            accumulator -= number;
         break;
 
         case "*":
-            acumulador *= numero;
+            accumulator *= number;
         break;
 
         case "/":
-            acumulador /= numero;
+            accumulator /= number;
         break;
     }
 
-    $pantalla.value = acumulador;
+    $screen.value = accumulator;
 }
 
-$btnSuma.onclick = () => {
+$btnAddition.onclick = () => {
     
-    logicaOperaciones("+");
+    performOperationLogic("+");
 }
 
 
 
-$btnResta.onclick = () => {
+$btnSubstraction.onclick = () => {
    
-    logicaOperaciones("-");
+    performOperationLogic("-");
 }
 
-$btnMultiplicacion.onclick = () => {
-    logicaOperaciones("*");
+$btnMultiplication.onclick = () => {
+    performOperationLogic("*");
 }
 
 $btnDivision.onclick = () => {
-    logicaOperaciones("/");
+    performOperationLogic("/");
 }
 
-$btnIgual.onclick = () => {
-    if(inicio)
+$btnEqual.onclick = () => {
+    if(start)
     {
-        acumulador = numero;
-        inicio = false;
+        accumulator = number;
+        start = false;
     }
 
-    aplicarOperacion();
-    operadorPresionado = false;
-    puntoPresionado = false;
+    applyOperation();
+    isOperatorPressed = false;
+    isPeriodPressed = false;
 
 }
 
-$btnPunto.onclick = () => {
+$btnPeriod.onclick = () => {
 
-    // if(operadorPresionado)
-    //     $pantalla.value = "";
-
-    if(!$pantalla.value.includes("."))
+    if(!$screen.value.includes("."))
     {
-        if($pantalla.value === "" || $pantalla.value === "0")
+        if($screen.value === "" || $screen.value === "0")
         {
-            $pantalla.value = "0.";
+            $screen.value = "0.";
         }
         else{
-            $pantalla.value += ".";
-            numeroPresionado = false;
+            $screen.value += ".";
+            isNumberPressed = false;
         }
 
-        puntoPresionado = true;
+        isPeriodPressed = true;
     }
 
-    numero = eval($pantalla.value);
+    number = eval($screen.value);
 }
 
-$btnLimpiar.onclick = () => {
-    limpiar();
+$btnClean.onclick = () => {
+    clean();
 }
 
 
-function limpiar()
+function clean()
 {
-    $pantalla.value = "";
-    puntoPresionado = false;
-    numeroPresionado = false;
-    operadorPresionado = false;
-    numero = 0;
-    acumulador = 0;
-    operacion = "";
-    inicio = true;
+    $screen.value = "";
+    isPeriodPressed = false;
+    isNumberPressed = false;
+    isOperatorPressed = false;
+    number = 0;
+    accumulator = 0;
+    operation = "";
+    start = true;
 }
 
 document.body.onkeydown = (e) => {
     const key = e.key;
     
-
-    // if(key === "." && numeroPresionado)
-    // {
-    //     if($pantalla.value.includes("."))
-    //     {
-    //         e.preventDefault();
-    //         return;
-    //     }
-    //     else {
-    //         numeroPresionado = false;
-    //         $pantalla.value += ".";
-    //     }
-    // }
-
-
-//    if($pantalla === document.activeElement)
     if(key !== 'Backspace' && key !== 'Tab' && key !== 'Escape' && key !== 'Enter' && isNaN(key))
     {
         e.preventDefault();
     }
     else{
-        // numeroPresionado = true;
-        $pantalla.focus();
+        $screen.focus();
     }
 
     const $buttons = Array.from(document.getElementsByTagName("button"));
