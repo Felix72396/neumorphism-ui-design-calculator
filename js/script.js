@@ -30,10 +30,8 @@ let number = 0,
 //logic----------------------------------------------
 
 
-
 function assignNumbers(n)
 {
-    
     if(isPeriodPressed)
     {
         $screen.value += `${n}`;
